@@ -5,7 +5,7 @@ const Transaction = db.transaction;
 const findAll = async (req, res) => {
   const description = req.query.description;
 
-  var condition = name
+  var condition = description
     ? { description: { $regex: new RegExp(description), $options: '1' } }
     : {};
 
