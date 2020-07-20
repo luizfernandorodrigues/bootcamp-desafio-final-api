@@ -24,4 +24,20 @@ const findAll = async (req, res) => {
   }
 };
 
-module.exports = { findAll };
+const getTransactionsFrom = async (req, res) => {
+  const period = req.query.period;
+
+  try {
+    const data = await Transaction.find({ yearMonth: period });
+
+    if (data.length < 1) {
+      res.status(404).send('Nenhum Registro Encontrado');
+    }
+
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: 'Erro ao buscar o periodo: ' + period });
+  }
+};
+
+module.exports = { findAll, getTransactionsFrom };
