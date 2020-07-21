@@ -36,6 +36,7 @@ const getTransactionsFrom = async (req, res) => {
 
     res.send(data);
   } catch (error) {
+    console.log({ message: 'Erro ao buscar o periodo: ' + period });
     res.status(500).send({ message: 'Erro ao buscar o periodo: ' + period });
   }
 };
