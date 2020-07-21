@@ -12,7 +12,12 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://luizfernando-desafio-final-app.herokuapp.com/',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+);
 app.use(express.json());
 
 // /**
