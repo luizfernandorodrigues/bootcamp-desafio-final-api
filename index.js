@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: 'https://luizfernando-desafio-final-app.herokuapp.com/',
+    origin: 'https://luizfernando-desafio-final-app.herokuapp.com/transaction',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   })
 );
