@@ -82,7 +82,7 @@ const postTransaction = async (req, res) => {
       yearMonthDay: req.body.yearMonthDay,
       type: req.body.type,
     });
-
+    console.log(transaction);
     await transaction.save(transaction);
 
     res.send(transaction);
