@@ -41,4 +41,82 @@ const getTransactionsFrom = async (req, res) => {
   }
 };
 
-module.exports = { findAll, getTransactionsFrom };
+const updateTransaction = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: 'Dados para atualizacao vazio',
+    });
+  }
+
+  const id = req.params.id;
+
+  try {
+    const data = await Transaction.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+
+    if (data.length < 1) {
+      res
+        .status(404)
+        .send({ message: 'Nenhuma transação encontrada para atualizar' });
+    }
+
+    res.send({ message: 'Transação atualizada com sucesso' });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Erro ao atualizar a transação id: ' + id });
+  }
+};
+
+const postTransaction = async (req, res) => {
+  try {
+    const transaction = new Transaction({
+      description: req.body.description,
+      value: req.body.value,
+      category: req.body.category,
+      year: req.body.year,
+      month: req.body.month,
+      day: req.body.day,
+      yearMonth: req.body.yearMonth,
+      yearMonthDay: req.body.yearMonthDay,
+      type: req.body.type,
+    });
+
+    await transaction.save(transaction);
+
+    res.send(transaction);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: error.message || 'Algum erro ocorreu ao salvar' });
+  }
+};
+
+const deleteTransaction = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const data = await Transaction.findByIdAndDelete({ _id: id });
+
+    if (data.length < 1) {
+      res
+        .status(404)
+        .send({ message: 'Nenhuma transação encontrada para exclusao' });
+    }
+
+    res.send({ message: 'Transação excluida com sucesso' });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Nao foi possivel deletar a transação id: ' + id });
+  }
+};
+
+module.exports = {
+  findAll,
+  getTransactionsFrom,
+  updateTransaction,
+  postTransaction,
+  deleteTransaction,
+};
