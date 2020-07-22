@@ -85,6 +85,7 @@ const postTransaction = async (req, res) => {
     console.log(transaction);
     await transaction.save(transaction);
 
+    console.log(transaction);
     res.send(transaction);
   } catch (error) {
     res
